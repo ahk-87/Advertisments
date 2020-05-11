@@ -1,0 +1,14 @@
+﻿alfaBig=39000
+touchBig=39000
+alfaSmall=16000
+touchSmall=20000
+start=16000
+lines=
+pubg770Price=40000
+10DolarTouch=13500
+10DolarAlfa=15000
+ayamTouch=16000
+ayam10Days=5500
+ayamAlfa=14000
+bannerAd=alfa
+↓=↑

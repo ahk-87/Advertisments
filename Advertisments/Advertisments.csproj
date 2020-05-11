@@ -129,6 +129,11 @@
   <ItemGroup>
     <Resource Include="alfaLogo.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Ads\1- touch ayam.PNG" />
+    <Resource Include="Ads\2- dolar touch 10.PNG" />
+    <Resource Include="Ads\prices.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
