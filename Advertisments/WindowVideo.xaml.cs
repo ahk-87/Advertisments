@@ -4,6 +4,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -34,8 +35,9 @@ namespace Advertisments
         DoubleAnimation FadingIn, FadingOut;
         bool fading = false;
         int fadingInt = 0;
+        string linesAvailable = "false";
 
-        string bannerAd = "";
+        string timeShopOpen = "";
 
         public WindowVideo()
         {
@@ -68,10 +70,7 @@ namespace Advertisments
             //mediaElement.Clock.CurrentTimeInvalidated += Clock_CurrentTimeInvalidated;
             //mediaElement.Clock = mc;
             //mc.CurrentTimeInvalidated += Clock_CurrentTimeInvalidated;
-            DispatcherTimer timer = new DispatcherTimer();
-            timer.Interval = new TimeSpan(0, 0, 0, 0, 100);
-            timer.Tick += Timer_Tick;
-            timer.Start();
+
 
             DispatcherTimer timerOneCard = new DispatcherTimer();
             timerOneCard.Interval = new TimeSpan(0, 0, 0, 10, 0);
@@ -95,6 +94,11 @@ namespace Advertisments
 
             FadingIn = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(2.5));
             FadingOut = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(1.5));
+
+            DispatcherTimer timer = new DispatcherTimer();
+            timer.Interval = new TimeSpan(0, 0, 0, 0, 100);
+            timer.Tick += Timer_Tick;
+            timer.Start();
 
         }
 
@@ -146,14 +150,57 @@ namespace Advertisments
             }
         }
 
+        bool videoEnded = false;
+        TimeSpan timeSpanEndVideo = new TimeSpan();
+        int powerOff = 0;
         private void Timer_Tick(object sender, EventArgs e)
         {
+            if (image2.Visibility == Visibility.Visible)
+            {
+                TimeSpan timeClose = TimeSpan.Parse(timeShopOpen);
+                if (DateTime.Now.Hour == (timeClose.Hours > 10 ? timeClose.Hours : timeClose.Hours + 12) && DateTime.Now.Minute > timeClose.Minutes)
+                {
+                    string[] lines = File.ReadAllLines("Ads\\prices.txt");
+                    Dictionary<string, string> prices = new Dictionary<string, string>();
+                    foreach (string l in lines)
+                    {
+                        string[] values = l.Split(new char[] { '=' });
+                        prices.Add(values[0], values[1]);
+                    }
+                    prices["reopen"] = "";
+                    StringBuilder sb = new StringBuilder();
+                    foreach (KeyValuePair<string, string> k in prices)
+                    {
+                        sb.AppendLine(k.Key + "=" + k.Value);
+                    }
+                    File.WriteAllText("Ads\\prices.txt", sb.ToString());
+
+                    image2.Visibility = Visibility.Hidden;
+                    timeShopOpen = "";
+                    textTimeOpen.Visibility = Visibility.Hidden;
+                }
+                return;
+            }
+
+            if (timeShopOpen != "")
+            {
+                image2.Source = new BitmapImage(new Uri("timeOpen.PNG", UriKind.RelativeOrAbsolute));
+                image2.Visibility = Visibility.Visible;
+                textTimeOpen.Text = timeShopOpen;
+                textTimeOpen.Visibility = Visibility.Visible;
+
+                return;
+            }
+
             if (video.Visibility == Visibility.Visible)
             {
-                if (video.Position > new TimeSpan(0, 1, 11))
+                if (timeSpanEndVideo.Seconds > 1 ? video.Position > timeSpanEndVideo : videoEnded)
                 {
                     video.Visibility = Visibility.Collapsed;
                     video.Stop();
+                    video.MediaEnded -= Video_MediaEnded;
+                    videoEnded = false;
+                    timeSpanEndVideo = new TimeSpan();
                     progressValue = 0;
                 }
                 return;
@@ -165,13 +212,21 @@ namespace Advertisments
                 getPrices();
 
                 images = Directory.GetFiles("Ads").ToList();
-                images = images.Where(s => s.EndsWith("mp4") | s.EndsWith("png", true, CultureInfo.CurrentCulture)).ToList();
+                images = images.Where(s => s.EndsWith("mp4") | s.EndsWith("png", true, CultureInfo.CurrentCulture)
+                    | s.EndsWith("jpg", true, CultureInfo.CurrentCulture) | s.EndsWith("jpeg", true, CultureInfo.CurrentCulture)).ToList();
 
                 if (imageIndex >= images.Count)
                     imageIndex = 0;
+                
 
                 if (images[imageIndex].EndsWith("mp4"))
                 {
+                    string duration = images[imageIndex];
+                    var match = Regex.Match(duration, "\\(\\d{1,3}\\)");
+                    if (match.Success)
+                        timeSpanEndVideo = new TimeSpan(0, 0, -1 * int.Parse(match.Value, NumberStyles.AllowParentheses));
+                    else
+                        video.MediaEnded += Video_MediaEnded;
                     video.Visibility = Visibility.Visible;
                     video.Source = new Uri(images[imageIndex], UriKind.Relative);
                     video.Play();
@@ -201,9 +256,30 @@ namespace Advertisments
 
                 image.Fill = new ImageBrush(bi);
                 //bi.StreamSource.Close();
+
+                var ss = System.Windows.Forms.Screen.AllScreens;
+                if (ss.Length == 1)
+                {
+                    powerOff = 3;
+                    WindowState = WindowState.Minimized;
+                }
+                if (powerOff > 0)
+                {
+                    if (ss.Length == 2)
+                    {
+                        if (--powerOff == 0)
+                        {
+                            double dpi = ss[0].Bounds.Width / SystemParameters.PrimaryScreenWidth;
+                            var workingArea = ss[1].Bounds;
+                            Left = workingArea.Left / dpi;
+                            Top = workingArea.Top;
+                            WindowState = WindowState.Maximized;
+                        }
+                    }
+                }
             }
 
-            if (progressValue > max / 2 && progressValue % 3 == 0 && images[imageIndex].Contains("alfa"))
+            if (images[imageIndex].Contains("alfa") && progressValue > max / 2 && progressValue % 3 == 0)
             {
                 if (progressValue % 6 == 0)
                     image.Fill = new ImageBrush(original);
@@ -216,6 +292,8 @@ namespace Advertisments
 
             if (progressValue > max)
             {
+                if (inverted != null)
+                    inverted = null;
                 progressValue = 0;
                 imageIndex++;
 
@@ -224,6 +302,11 @@ namespace Advertisments
                 //image2.Render(grid1);
                 //imageCards.Source =image2;
             }
+        }
+
+        private void Video_MediaEnded(object sender, RoutedEventArgs e)
+        {
+            videoEnded = true;
         }
 
         private void showSpecificPriceText(string fileName)
@@ -246,11 +329,19 @@ namespace Advertisments
             }
             else if (fileName.Contains("touch ayam"))
             {
-                textTouchAyamPrice.Visibility = Visibility.Visible;
+                textAyamTouchPrice.Visibility = Visibility.Visible;
             }
             else if (fileName.Contains("dolar alf 10") || fileName.Contains("dolar alfa 10"))
             {
                 text10DolarAlfaPrice.Visibility = Visibility.Visible;
+            }
+            else if (fileName.Contains("ayam alfa") || fileName.Contains("ayam alf"))
+            {
+                textAyamAlfaPrice.Visibility = Visibility.Visible;
+            }
+            else if (fileName.Contains("touch line"))
+            {
+                textTouchLinePrice.Visibility = Visibility.Visible;
             }
         }
 
@@ -260,8 +351,10 @@ namespace Advertisments
             textAyam10DaysPrice.Visibility = Visibility.Hidden;
             textStartPrice2.Visibility = Visibility.Hidden;
             text10DolarTouchPrice.Visibility = Visibility.Hidden;
-            textTouchAyamPrice.Visibility = Visibility.Hidden;
+            textAyamTouchPrice.Visibility = Visibility.Hidden;
             text10DolarAlfaPrice.Visibility = Visibility.Hidden;
+            textAyamAlfaPrice.Visibility = Visibility.Hidden;
+            textTouchLinePrice.Visibility = Visibility.Hidden;
         }
 
         private void Clock_CurrentTimeInvalidated(object sender, EventArgs e)
@@ -300,18 +393,38 @@ namespace Advertisments
             textAyam10DaysPrice.Text = prices["ayam10Days"];
             text10DolarTouchPrice.Text = prices["10DolarTouch"];
             text10DolarAlfaPrice.Text = prices["10DolarAlfa"];
-            textTouchAyamPrice.Text = prices["ayamTouch"];
+            textAyamTouchPrice.Text = prices["ayamTouch"];
+            textAyamAlfaPrice.Text = prices["ayamAlfa"];
+            timeShopOpen = prices["reopen"];
+            textAyamTouchUpper.Text = prices["ayamTouch"];
+            textAyamAlfaUpper.Text = prices["ayamAlfa"];
+            textTouchLinePrice.Text = prices["lineTouch"];
+            linesAvailable = prices["linesAvailable"];
 
             if (prices["bannerAd"] == "alfa")
             {
-                textBannerAyyam.Text = "ايام الفا + 1.9$";
+                textBannerAyyam.Text = "شهر ايام الفا + 1.9$";
                 textBannerPrice.Text = prices["ayamAlfa"];
                 imageBannerLogo.Source = new BitmapImage(new Uri("alfaLogo.png", UriKind.Relative));
+            }
+            else if (prices["bannerAd"] == "syria")
+            {
+
+                textBannerAyyam.Text = "١٠٠٠ رصيد سوري (تحويل سريع)  ";
+                textBannerPrice.Text = prices["syria1000"];
+                imageBannerLogo.Source = new BitmapImage(new Uri("mtnSyria.PNG", UriKind.Relative));
+            }
+            else if (prices["bannerAd"] == "freefire")
+            {
+                textBannerAyyam.Text = "تشريج 110 Diamonds";
+                textBannerPrice.Text = prices["freefire110gems"];
+                imageBannerLogo.Source = new BitmapImage(new Uri("freefire.PNG", UriKind.Relative));
+
             }
             else
             {
 
-                textBannerAyyam.Text = "ايام تاتش + 1.8$";
+                textBannerAyyam.Text = "شهر ايام تاتش + 1.8$";
                 textBannerPrice.Text = prices["ayamTouch"];
                 imageBannerLogo.Source = new BitmapImage(new Uri("touchLogo.jpg", UriKind.Relative));
             }

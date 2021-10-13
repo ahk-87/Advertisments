@@ -22,13 +22,12 @@ namespace Advertisments
     /// </summary>
     public partial class MainWindow : Window
     {
-        string[] images;
-        int imageIndex = 0;
+        bool activated = false;
         WindowVideo win = new WindowVideo();
         public MainWindow()
         {
             InitializeComponent();
-
+            
             //BitmapImage bi = new BitmapImage(new Uri("Dollars Alfa .PNG", UriKind.Relative));
             //int stride = (int)bi.PixelWidth * (bi.Format.BitsPerPixel / 8);
             //byte[] pixels = new byte[(int)bi.PixelHeight * stride];
@@ -48,19 +47,59 @@ namespace Advertisments
             //stream.Dispose();
 
             slider.Value = (int)Properties.Settings.Default.Max;
+            activated = (bool)Properties.Settings.Default.Activated;
+            if (!activated)
+            {
+                try
+                {
+                    string path = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\Ads Activation.txt";
+                    string s = File.ReadAllText(path);
+                    var crypto = System.Security.Cryptography.MD5.Create();
+                    var data = crypto.ComputeHash(Encoding.UTF8.GetBytes(s));
+                    var sBuilder = new StringBuilder();
+
+                    // Loop through each byte of the hashed data
+                    // and format each one as a hexadecimal string.
+                    for (int i = 0; i < data.Length; i++)
+                    {
+                        sBuilder.Append(data[i].ToString("x2"));
+                    }
+                    if (sBuilder.ToString() == "4989045782be9b559a0976d8cb068885")
+                    {
+                        File.Delete(path);
+                        activated = true;
+                        Properties.Settings.Default.Activated = true;
+                        Properties.Settings.Default.Save();
+
+                    }
+                }
+                catch (Exception)
+                {
+                    activated = false;
+                }
+            }
         }
 
         private void button_Click(object sender, RoutedEventArgs e)
         {
+            if (!activated)
+            {
+                textError.Visibility = Visibility.Visible;
+                return;
+            }
+            if (win.IsActive) return;
             var ss = Screen.AllScreens;
+            double dpi = ss[0].Bounds.Width / SystemParameters.PrimaryScreenWidth;
             if (ss.Length == 2)
             {
-                var workingArea = ss[1].WorkingArea;
-                win.Left = workingArea.Left;
+                var workingArea = ss[1].Bounds;
+                win.Left = workingArea.Left / dpi;
                 win.Top = workingArea.Top;
-                win.Height = workingArea.Height;
-                win.Width = workingArea.Width;
+                win.Height = workingArea.Height / dpi;
+                win.Width = workingArea.Width / dpi;
+
             }
+            win.Tag = dpi;
             win.Show();
 
             frame.Fill = new VisualBrush(win.GetMedia());

@@ -5,61 +5,163 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Advertisments"
         mc:Ignorable="d" Loaded="Window_Loaded" WindowStyle="None" WindowState="Normal"
-        Title="WindowVideo" Height="768" Width="1024">
+        Title="WindowVideo" Height="1080" Width="1920">
     <Grid Name="mainGrid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
         <Grid.RowDefinitions>
+            <RowDefinition Height="15"/>
             <RowDefinition Height="50" />
             <RowDefinition Height="9*"/>
             <RowDefinition Height="5"/>
             <RowDefinition Height="1.1*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="260"/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="25"/>
+            <ColumnDefinition Width="0.26*"/>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="45"/>
         </Grid.ColumnDefinitions>
 
+        <Grid Grid.Column="2" TextBlock.FontSize="40" Grid.Row="1" Margin="50,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="1.5*"/>
+                <ColumnDefinition Width="80"/>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="1.5*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Text=" شهر ايام تاتش + 1.8$ بس بـ" VerticalAlignment="Center" HorizontalAlignment="Left" FontFamily="Andalus" Grid.Column="4"/>
+            <TextBlock Name="textAyamTouchUpper" Text="14000" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="3" Margin="0"
+                       Foreground="#FF0083FF" FontFamily="Script MT Bold">
+                <FrameworkElement.Triggers>
+                    <EventTrigger RoutedEvent="TextBlock.Loaded">
+                        <BeginStoryboard>
+                            <Storyboard RepeatBehavior="Forever" BeginTime="0:0:0">
+                                <ThicknessAnimation 
+                                Storyboard.TargetProperty="Margin"
+                                From="0,0,0,0" To="-30,0,0,0" Duration="0:0:1" />
+                                <ThicknessAnimation 
+                                Storyboard.TargetProperty="Margin" BeginTime="0:0:1"
+                                From="-30,0,0,0" To="30,0,0,0" Duration="0:0:2" />
+                                <ThicknessAnimation 
+                                Storyboard.TargetProperty="Margin" BeginTime="0:0:3"
+                                From="30,0,0,0" To="0,0,0,0" Duration="0:0:1" />
+                                <DoubleAnimation 
+                                Storyboard.TargetProperty="FontSize" BeginTime="0:0:4"
+                                By="16" Duration="0:0:0.4" />
+                                <DoubleAnimation 
+                                Storyboard.TargetProperty="FontSize" BeginTime="0:0:4.4"
+                                By="-16" Duration="0:0:1.1" />
+                                <DoubleAnimation 
+                                Storyboard.TargetProperty="FontSize" BeginTime="0:0:5.5"
+                                By="0" Duration="0:0:5.5" />
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </FrameworkElement.Triggers>
+            </TextBlock>
+            <Rectangle Grid.Column="3" Grid.ColumnSpan="2" Stroke="Blue" StrokeThickness="1" Margin="4" Fill="#0500F3FF">
+                <Rectangle.Effect>
+                    <DropShadowEffect BlurRadius="5" Direction="0" ShadowDepth="1"/>
+                </Rectangle.Effect>
+                <Rectangle.Triggers>
+                    <EventTrigger RoutedEvent="Rectangle.Loaded">
+                        <BeginStoryboard>
+                            <Storyboard AutoReverse="True" RepeatBehavior="Forever" BeginTime="0:0:1.5">
+                                <ColorAnimation 
+                                Storyboard.TargetProperty="Fill.Color"
+                                From="#0500F3FF" To="#00FF0000" Duration="0:0:1.5" />
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </Rectangle.Triggers>
+            </Rectangle>
+            <TextBlock Text=" شهر ايام الفا + 1.9$ بس بـ" VerticalAlignment="Center" HorizontalAlignment="Left" FontFamily="Andalus" Grid.Column="1"/>
+            <TextBlock Name="textAyamAlfaUpper" Text="13000" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="0" 
+                       Foreground="Red" FontFamily="Script MT Bold">
+                <FrameworkElement.Triggers>
+                    <EventTrigger RoutedEvent="TextBlock.Loaded">
+                        <BeginStoryboard>
+                            <Storyboard RepeatBehavior="Forever" BeginTime="0:0:5.5">
+                                <ThicknessAnimation 
+                                Storyboard.TargetProperty="Margin"
+                                From="0,0,0,0" To="-30,0,0,0" Duration="0:0:1" />
+                                <ThicknessAnimation 
+                                Storyboard.TargetProperty="Margin" BeginTime="0:0:1"
+                                From="-30,0,0,0" To="30,0,0,0" Duration="0:0:2" />
+                                <ThicknessAnimation 
+                                Storyboard.TargetProperty="Margin" BeginTime="0:0:3"
+                                From="30,0,0,0" To="0,0,0,0" Duration="0:0:1" />
+                                <DoubleAnimation 
+                                Storyboard.TargetProperty="FontSize" BeginTime="0:0:4"
+                                By="16" Duration="0:0:0.4" />
+                                <DoubleAnimation 
+                                Storyboard.TargetProperty="FontSize" BeginTime="0:0:4.4"
+                                By="-16" Duration="0:0:1.1" />
+                                <DoubleAnimation 
+                                Storyboard.TargetProperty="FontSize" BeginTime="0:0:5.5"
+                                By="0" Duration="0:0:5.5" />
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </FrameworkElement.Triggers>
+            </TextBlock>
+            <Rectangle Grid.Column="0" Grid.ColumnSpan="2" Stroke="Red" StrokeThickness="1" Margin="4" Fill="#0AFF0000">
+                <Rectangle.Effect>
+                    <DropShadowEffect BlurRadius="5" Direction="0" ShadowDepth="1"/>
+                </Rectangle.Effect>
+                <Rectangle.Triggers>
+                    <EventTrigger RoutedEvent="Rectangle.Loaded">
+                        <BeginStoryboard>
+                            <Storyboard AutoReverse="True" RepeatBehavior="Forever">
+                                <ColorAnimation 
+                                Storyboard.TargetProperty="Fill.Color"
+                                From="#0AFF0000" To="#00FF0000" Duration="0:0:1.5" />
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </Rectangle.Triggers>
+            </Rectangle>
+        </Grid>
         <MediaElement x:Name="video" Volume="0" LoadedBehavior="Manual" Stretch="Fill"
-                      Grid.Column="1" Grid.RowSpan="3" Visibility="Collapsed" Panel.ZIndex="2"/>
-        <Image  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Fill"
-                   Grid.Column="1" Grid.RowSpan="2" Visibility="Hidden" />
+                      Grid.Column="1" Grid.Row="2" Grid.RowSpan="2" Visibility="Collapsed" Panel.ZIndex="2" Grid.ColumnSpan="2"/>
         <Rectangle x:Name="image" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Fill" Stroke="Black" 
-                    Grid.Column="1" Grid.RowSpan="2"/>
-        <StackPanel Orientation="Horizontal" Grid.Row="3" HorizontalAlignment="Center" Grid.Column="1" Background="#B2FFE4C4" VerticalAlignment="Center">
+                    Grid.Column="2" Grid.Row="2" />
+        <StackPanel Orientation="Horizontal" Grid.Row="4" HorizontalAlignment="Center" Grid.Column="2" Background="#B2FFE4C4" VerticalAlignment="Center">
             <TextBlock x:Name="textBannerPrice" Text="21000" HorizontalAlignment="Right" FontFamily="Stencil" 
-                    VerticalAlignment="Center" FontSize="40" Foreground="#FFFC0000">
+                    VerticalAlignment="Center" FontSize="60" Foreground="#FFFC0000">
             </TextBlock>
             <TextBlock Text=" بس بـ " HorizontalAlignment="Right" FontFamily="Calibri" 
-                    VerticalAlignment="Center" FontSize="54"/>
-            <Image x:Name="imageBannerLogo" HorizontalAlignment="Center" VerticalAlignment="Center" Source="touchLogo.jpg" Height="70"/>
-            <TextBlock x:Name="textBannerAyyam" Text="ايام تاتش + 1.8$" HorizontalAlignment="Right" FontFamily="Calibri" 
-                    VerticalAlignment="Center" FontSize="50" Foreground="#FF007279" FlowDirection="RightToLeft"/>
+                    VerticalAlignment="Center" FontSize="74"/>
+            <Image x:Name="imageBannerLogo" HorizontalAlignment="Center" VerticalAlignment="Center" Source="touchLogo.jpg" Height="90"/>
+            <TextBlock x:Name="textBannerAyyam" Text="شهر ايام تاتش + 1.8$" HorizontalAlignment="Right" FontFamily="Calibri" 
+                    VerticalAlignment="Center" FontSize="70" Foreground="#FF007279" FlowDirection="RightToLeft"/>
         </StackPanel>
-        <ProgressBar Name="progress" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="2" Grid.Column="1"/>
+        <ProgressBar Name="progress" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="3" Grid.Column="2"/>
 
-        <TextBlock x:Name="textDate" Grid.Row="0"  HorizontalAlignment="center"  TextWrapping="Wrap" Text="28-10-2019" 
-                       VerticalAlignment="Center" FontSize="30" Foreground="Chocolate"/>
+        <TextBlock x:Name="textDate" Grid.Row="1"  HorizontalAlignment="center"  TextWrapping="Wrap" Text="28-10-2019" 
+                       VerticalAlignment="Center" FontSize="60" Foreground="Chocolate" Grid.Column="1"/>
 
-        <StackPanel Grid.Column="0" Grid.Row="1" Grid.RowSpan="3" Margin="0,-10,0,0">
-            <Grid Visibility="Visible" Name="GridLines" Margin="0,-10">
+        <StackPanel Grid.Column="1" Grid.RowSpan="4" Margin="0,40,0,0" Grid.Row="1">
+            <Grid Visibility="Collapsed" Name="GridLines" >
                 <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Source="touchLogo.jpg" Opacity="0.15" Margin="0,60,0,0"
                        Stretch="Fill"/>
                 <StackPanel HorizontalAlignment="Center" VerticalAlignment="Top">
-                    <TextBlock TextWrapping="Wrap" Text="خطوط تاتش جديدة" Margin="0,0,0,-20" HorizontalAlignment="Center"
-                        FontSize="60" FontFamily="Aldhabi" Foreground="#FF2F2AF7" Name="asdad"/>
-                    <TextBlock x:Name="TextLines" HorizontalAlignment="Center" FontSize="47" FontFamily="Sitka Text"
-                               Height="240" Text="71-86 12 35" TextAlignment="Center" Margin="0,0,0,10"/>
+                    <TextBlock TextWrapping="Wrap" Text="خطوط تاتش جديدة" Margin="0,5,0,-25" HorizontalAlignment="Center"
+                        FontSize="70" FontFamily="Aldhabi" Foreground="#FF2F2AF7" Name="asdad"/>
+                    <TextBlock x:Name="TextLines" HorizontalAlignment="Center" FontSize="66" FontFamily="Sitka Text"
+                               Height="320" Text="78-85 83 54" TextAlignment="Center" Margin="0,0,0,10"/>
                 </StackPanel>
             </Grid>
 
             <Grid Margin="10,0,10.4,9.6" Visibility="Visible" Name="GridRechargeCardPrices" >
                 <Grid.RenderTransform>
-                    <ScaleTransform ScaleY="0.5" x:Name="GridRechargeScaleY"/>
+                    <ScaleTransform ScaleY="1" x:Name="GridRechargeScaleY"/>
                 </Grid.RenderTransform>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="70*" />
-                    <RowDefinition Height="224*"/>
-                    <RowDefinition Height="224*"/>
-                    <RowDefinition Height="225*"/>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="3*"/>
+                    <RowDefinition Height="3*"/>
+                    <RowDefinition Height="3*"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition/>
@@ -128,14 +230,14 @@
                 <Grid Name="GridOneCard" Grid.Row="1" Grid.RowSpan="3" Grid.ColumnSpan="2" Background="White" Opacity="0">
                     <Grid.RowDefinitions>
                         <RowDefinition/>
-                        <RowDefinition Height="80"/>
-                        <RowDefinition Height="110"/>
+                        <RowDefinition Height="160"/>
+                        <RowDefinition Height="170"/>
                     </Grid.RowDefinitions>
-                    <Image Name="OneCardImage" Source="start.jpg" Stretch="Fill" Margin="0,20"/>
+                    <Image Name="OneCardImage" Source="start.jpg" Stretch="Fill" Margin="0,70,0,20"/>
                     <TextBlock Name="OneCardTextInfo" Grid.Row="1" Text="الفا كبير" VerticalAlignment="Center" HorizontalAlignment="Center"
-                               FontSize="60" FontWeight="Bold" FontFamily="PT Simple Ruled"/>
+                               FontSize="80" FontWeight="Bold" FontFamily="PT Simple Ruled"/>
                     <TextBlock Name="OneCardTextPrice" Grid.Row="2" Text="16000" VerticalAlignment="Center" HorizontalAlignment="Center"
-                               FontSize="90" FontFamily="Imprint MT Shadow" FontWeight="Bold">
+                               FontSize="130" FontFamily="Imprint MT Shadow" FontWeight="Bold">
                         <TextBlock.Triggers>
                             <EventTrigger RoutedEvent="FrameworkElement.Loaded">
                                 <BeginStoryboard>
@@ -152,7 +254,13 @@
             </Grid>
         </StackPanel>
 
-        <TextBlock x:Name="textPubgPrice" Grid.Column="1" HorizontalAlignment="Left" Margin="22,391.6,0,0" Grid.Row="1" TextWrapping="Wrap" 
+
+        <Image  Name="image2"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stretch="Fill" Source="10$ touch.PNG"
+                Grid.Column="1" Grid.Row="2" Visibility="Hidden" Grid.ColumnSpan="2" Margin="371.34,0.4,-0.4,4.4" Grid.RowSpan="2"/>
+
+
+
+        <TextBlock x:Name="textPubgPrice" Grid.Column="2" HorizontalAlignment="Left" Margin="21.6,391.4,0,0" Grid.Row="2" TextWrapping="Wrap" 
                    Text="28500" VerticalAlignment="Top" FontSize="86" FontFamily="Imprint MT Shadow" Visibility="Hidden" FontWeight="Bold">
             <TextBlock.Foreground>
                 <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
@@ -181,8 +289,8 @@
                 </EventTrigger>
             </TextBlock.Triggers>
         </TextBlock>
-        <TextBlock x:Name="textAyam10DaysPrice" Grid.Column="1" HorizontalAlignment="Left" Margin="195,387.6,0,0" Grid.Row="1" TextWrapping="Wrap" 
-                   Text="7500" VerticalAlignment="Top" FontSize="160" FontFamily="Imprint MT Shadow" Visibility="Hidden" FontWeight="Bold" Foreground="#FFFC0303">
+        <TextBlock x:Name="textAyam10DaysPrice" Grid.Column="2" HorizontalAlignment="Left" Margin="443.6,548.2,0,0" Grid.Row="2" TextWrapping="Wrap" 
+                   Text="7500" VerticalAlignment="Top" FontSize="260" FontFamily="Imprint MT Shadow" Visibility="Hidden" FontWeight="Bold" Foreground="#FFFC0303">
             <TextBlock.RenderTransform>
                 <TransformGroup>
                     <RotateTransform x:Name="rotate10Days" />
@@ -202,8 +310,8 @@
                 </EventTrigger>
             </TextBlock.Triggers>
         </TextBlock>
-        <TextBlock x:Name="textStartPrice2" Grid.Column="1" HorizontalAlignment="Left" Margin="227,393.6,0,0" Grid.Row="1" TextWrapping="Wrap" 
-                   Text="16000" VerticalAlignment="Top" FontSize="160" FontFamily="Imprint MT Shadow" Visibility="Hidden" FontWeight="Bold" Foreground="#FFFC7703">
+        <TextBlock x:Name="textStartPrice2" Grid.Column="2" HorizontalAlignment="Left" Margin="488.6,534.2,0,0" Grid.Row="2" TextWrapping="Wrap" 
+                   Text="16000" VerticalAlignment="Top" FontSize="300" FontFamily="Imprint MT Shadow" Visibility="Hidden" FontWeight="Bold" Foreground="#FFFC7703">
             <TextBlock.RenderTransform>
                 <TransformGroup>
                     <RotateTransform x:Name="skewStart" />
@@ -223,8 +331,8 @@
                 </EventTrigger>
             </TextBlock.Triggers>
         </TextBlock>
-        <TextBlock x:Name="text10DolarTouchPrice" Grid.Column="1" HorizontalAlignment="Left" Margin="58,357.6,0,0" Grid.Row="1" TextWrapping="Wrap" 
-                   Text="16000" VerticalAlignment="Top" FontSize="165" FontFamily="Imprint MT Shadow" Visibility="Hidden" FontWeight="Bold" Foreground="#FFFC0303">
+        <TextBlock x:Name="text10DolarTouchPrice" Grid.Column="2" HorizontalAlignment="Left" Margin="142.4,439.2,0,0" Grid.Row="2" TextWrapping="Wrap" 
+                   Text="16000" VerticalAlignment="Top" FontSize="300" FontFamily="Imprint MT Shadow" Visibility="Hidden" FontWeight="Bold" Foreground="#FFFC0303">
             <TextBlock.Triggers>
                 <EventTrigger RoutedEvent="Image.Loaded">
                     <BeginStoryboard >
@@ -237,7 +345,7 @@
                 </EventTrigger>
             </TextBlock.Triggers>
         </TextBlock>
-        <TextBlock x:Name="textTouchAyamPrice" Grid.Column="1" HorizontalAlignment="Center" Grid.Row="1"  Margin="85,331.4,168.6,75"
+        <TextBlock x:Name="textAyamTouchPrice" Grid.Column="2" HorizontalAlignment="Center" Grid.Row="2"  Margin="472.6,470.4,555.6,213.6"
                    Text="28500" VerticalAlignment="Center" FontSize="190" FontFamily="Imprint MT Shadow" Visibility="Hidden" FontWeight="Bold">
             <TextBlock.Foreground>
                 <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
@@ -266,13 +374,40 @@
                 </EventTrigger>
             </TextBlock.Triggers>
         </TextBlock>
-        <TextBlock x:Name="text10DolarAlfaPrice" HorizontalAlignment="Center" Grid.Row="1"  Margin="1,394.6,332.6,46.8" Background="#FFFFF0F0" 
-                   Text="28500" VerticalAlignment="Center" FontSize="160" FontFamily="Imprint MT Shadow" Visibility="Hidden" FontWeight="Bold" RenderTransformOrigin="0.5,0.5" Grid.Column="1">
+        <TextBlock x:Name="text10DolarAlfaPrice" HorizontalAlignment="Center" Grid.Row="2"  Margin="215.4,561.2,823.8,144.2" Background="#FFDA8A8A" 
+                   Text="28500" VerticalAlignment="Center" FontSize="160" FontFamily="Imprint MT Shadow" Visibility="Hidden" FontWeight="Bold" RenderTransformOrigin="-0.162,0.9" Grid.Column="2">
             <TextBlock.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
                     <SkewTransform/>
                     <RotateTransform Angle="-16.449"/>
+                    <TranslateTransform X="32.873" Y="76.39"/>
+                </TransformGroup>
+            </TextBlock.RenderTransform>
+
+            <TextBlock.Triggers>
+                <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+                    <BeginStoryboard>
+                        <Storyboard AutoReverse="True" RepeatBehavior="Forever">
+                            <ColorAnimation 
+                                Storyboard.TargetProperty="Foreground.Color"
+                                 From="DarkBlue" To="Blue" Duration="0:0:0.2" />
+                            <ColorAnimation 
+                                Storyboard.TargetProperty="Foreground.Color" BeginTime="0:0:0.2"
+                                 From="Blue" To="White" Duration="0:0:0.2" />
+                        </Storyboard>
+
+                    </BeginStoryboard>
+                </EventTrigger>
+            </TextBlock.Triggers>
+        </TextBlock>
+        <TextBlock x:Name="textAyamAlfaPrice" HorizontalAlignment="Center" Grid.Row="2"  
+                   Text="28500" VerticalAlignment="Center" FontSize="140" FontFamily="Imprint MT Shadow" Visibility="Hidden" FontWeight="Bold" RenderTransformOrigin="0.5,0.5" Grid.Column="2">
+            <TextBlock.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform />
                     <TranslateTransform/>
                 </TransformGroup>
             </TextBlock.RenderTransform>
@@ -283,12 +418,57 @@
                         <Storyboard AutoReverse="True" RepeatBehavior="Forever">
                             <ColorAnimation 
                                 Storyboard.TargetProperty="Foreground.Color"
-                                 From="Green" To="Purple" Duration="0:0:0.6" />
+                                 From="DarkBlue" To="Blue" Duration="0:0:0.2" />
                             <ColorAnimation 
-                                Storyboard.TargetProperty="Foreground.Color" BeginTime="0:0:0.6"
-                                 From="RosyBrown" To="Black" Duration="0:0:0.6" />
+                                Storyboard.TargetProperty="Foreground.Color" BeginTime="0:0:0.2"
+                                 From="Blue" To="White" Duration="0:0:0.2" />
                         </Storyboard>
 
+                    </BeginStoryboard>
+                </EventTrigger>
+            </TextBlock.Triggers>
+        </TextBlock>
+        <TextBlock x:Name="textTouchLinePrice" Grid.Column="2" HorizontalAlignment="Left"  Grid.Row="2" TextWrapping="Wrap" RenderTransformOrigin="0.5,0.5"
+                   Text="25000" VerticalAlignment="Top" FontSize="180" FontFamily="Maiandra GD" Visibility="Hidden" FontWeight="Bold" Margin="120.4,632.2,0,0">
+            <TextBlock.Foreground>
+                <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+                    <GradientStop Color="Black" Offset="0"/>
+                    <GradientStop Color="#FF06FF00" Offset="0.91"/>
+                </LinearGradientBrush>
+            </TextBlock.Foreground>
+            <TextBlock.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform x:Name="scaleTouchLinePrice" CenterX="0.5" CenterY="0.5"/>
+                </TransformGroup>
+            </TextBlock.RenderTransform>
+            <TextBlock.Triggers>
+                <EventTrigger RoutedEvent="Image.Loaded">
+                    <BeginStoryboard>
+                        <Storyboard AutoReverse="True" RepeatBehavior="Forever">
+                            <DoubleAnimation 
+                                Storyboard.TargetProperty="Opacity"
+                                From="1.0" To="0.4" Duration="0:0:0.6" />
+                            <DoubleAnimation Storyboard.TargetName="scaleTouchLinePrice" Storyboard.TargetProperty="ScaleY" By="0.4" Duration="0:0:0.3" 
+                                             DecelerationRatio="0.9" />
+                            <DoubleAnimation Storyboard.TargetName="scaleTouchLinePrice" Storyboard.TargetProperty="ScaleX" By="0.4" Duration="0:0:0.3" 
+                                             DecelerationRatio="0.9" />
+                        </Storyboard>
+
+                    </BeginStoryboard>
+                </EventTrigger>
+            </TextBlock.Triggers>
+        </TextBlock>
+
+
+        <TextBlock x:Name="textTimeOpen" Grid.Column="2" HorizontalAlignment="Center"  Grid.Row="2" TextWrapping="Wrap" 
+                   Text="5:30" VerticalAlignment="Bottom" FontSize="300" FontFamily="Imprint MT Shadow" Visibility="Hidden" FontWeight="Bold" Foreground="#FFFC0303" Margin="488.6,0,488.6,4.4" Grid.RowSpan="2">
+            <TextBlock.Triggers>
+                <EventTrigger RoutedEvent="Image.Loaded">
+                    <BeginStoryboard >
+                        <Storyboard AutoReverse="True" RepeatBehavior="Forever" >
+                            <ThicknessAnimation  Storyboard.TargetProperty="Margin" 
+                                From="-30,0,0,0" To="30,0,0,0" Duration="0:0:2" />
+                        </Storyboard>
                     </BeginStoryboard>
                 </EventTrigger>
             </TextBlock.Triggers>

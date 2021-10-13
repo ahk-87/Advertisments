@@ -130,9 +130,25 @@
     <Resource Include="alfaLogo.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Ads\1- touch ayam.PNG" />
-    <Resource Include="Ads\2- dolar touch 10.PNG" />
     <Resource Include="Ads\prices.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="mtnSyria.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="timeOpen.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="5- aayam 10 days.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="touch lines.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="10%24 touch.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="freefire.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
